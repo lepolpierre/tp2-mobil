@@ -42,7 +42,7 @@ public class FragmentLstVendeur extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_lst_vendeur, container, false);
-        list = view.findViewById(R.id.list);
+        list = view.findViewById(R.id.listeVendeur);
         return view;
     }
 

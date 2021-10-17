@@ -25,13 +25,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         FragmentLstVendeur fragmentLstVendeur = new FragmentLstVendeur();
-        FragmentLstClient fragmentLstUtilisateur = new FragmentLstClient();
+        FragmentLstClient fragmentLstClient = new FragmentLstClient();
 
         manager = getSupportFragmentManager();
 
         FragmentTransaction transaction = manager.beginTransaction();
 
-        transaction.add(R.id.fragmentContainerView, fragmentLstVendeur, null);
+        transaction.add(R.id.frameVendeur, fragmentLstVendeur, null);
+        transaction.add(R.id.frameClient, fragmentLstClient, null);
 
         transaction.commit();
 
