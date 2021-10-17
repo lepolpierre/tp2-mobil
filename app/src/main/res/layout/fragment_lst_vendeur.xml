@@ -15,9 +15,10 @@
         android:text="Liste vendeur" />
 
     <ListView
-        android:id="@+id/liste"
+        android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:choiceMode="none" />
+        android:layout_height="307dp"
+        tools:listitem="@layout/row" />
+
 
 </LinearLayout>

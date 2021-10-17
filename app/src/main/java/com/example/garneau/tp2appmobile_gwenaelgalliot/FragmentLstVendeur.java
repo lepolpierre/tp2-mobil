@@ -20,7 +20,7 @@ public class FragmentLstVendeur extends Fragment {
 
     private List<Produit> m_Produit;
 
-    private ListView liste;
+    private ListView list;
 
     private ProduitRoomDB mDb;
 
@@ -42,7 +42,7 @@ public class FragmentLstVendeur extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_lst_vendeur, container, false);
-        liste = view.findViewById(R.id.liste);
+        list = view.findViewById(R.id.list);
         return view;
     }
 
@@ -50,8 +50,6 @@ public class FragmentLstVendeur extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle saveInstanceState) {
         super.onViewCreated(view, saveInstanceState);
-
-
 
         // instance de BD
         mDb = ProduitRoomDB.getDatabase(getContext());
@@ -61,9 +59,9 @@ public class FragmentLstVendeur extends Fragment {
             @Override
             public void run() {
                 mDb.ProduitDao().deleteAll();
-                Produit produit = new Produit("pomme","pomme verte");
+                Produit produit = new Produit("pomme","pomme verte", "1.0", "fruit", "2");
                 mDb.ProduitDao().insert(produit);
-                produit = new Produit("banane","banane verte");
+                produit = new Produit("banane","banane verte", "1.5", "fruit", "5");
                 mDb.ProduitDao().insert(produit);
 
                 m_Produit = mDb.ProduitDao().getAllProducts();
@@ -76,7 +74,7 @@ public class FragmentLstVendeur extends Fragment {
                         m_Adapter = new Adapteur(getActivity(), m_Produit);
 
                         // Passage de l'adapteur à la liste
-                        liste.setAdapter(m_Adapter);
+                        list.setAdapter(m_Adapter);
                     }
                 });
             }

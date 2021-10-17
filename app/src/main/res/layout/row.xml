@@ -4,23 +4,37 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/nom"
+        android:id="@+id/txtVNom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="TextView" />
+        android:text="txtVNom" />
 
     <TextView
-        android:id="@+id/description"
+        android:id="@+id/txtVDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="TextView" />
+        android:text="txtVDescription" />
 
     <TextView
-        android:id="@+id/prix"
+        android:id="@+id/txtVPrix"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="TextView" />
+        android:text="txtVPrix" />
+
+    <TextView
+        android:id="@+id/txtVCategorie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="txtVCategorie" />
+
+    <TextView
+        android:id="@+id/txtVQtt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="txtVQtt" />
 </LinearLayout>

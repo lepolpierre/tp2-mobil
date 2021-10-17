@@ -21,7 +21,7 @@ public abstract class ProduitRoomDB extends RoomDatabase {
         if (INSTANCE == null) {
             // Crée la BDD
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                    ProduitRoomDB.class, "Produit_database")
+                    ProduitRoomDB.class, "produit_database")
                     .build();
         }
         return INSTANCE;

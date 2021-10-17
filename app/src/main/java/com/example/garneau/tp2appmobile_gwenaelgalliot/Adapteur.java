@@ -19,7 +19,7 @@ class Adapteur extends ArrayAdapter<Produit> {
 
     public Adapteur(Activity context, List<Produit> m_RowModels) {
 
-        super(context, R.layout.row, R.id.nom, m_RowModels);
+        super(context, R.layout.row, R.id.txtVNom, m_RowModels);
 
         contexte = context;
         rowModels = m_RowModels;
@@ -44,6 +44,9 @@ class Adapteur extends ArrayAdapter<Produit> {
         View row = super.getView(position, convertView, parent);
 
         Produit rowData = rowModels.get(position);
+        viewHolder.textViewDescription.setText(rowData.getDescription());
+        viewHolder.textViewNom.setText(rowData.getName());
+        viewHolder.textViewPrix.setText(rowData.getPrix());
 
         return row;
     }
@@ -54,9 +57,9 @@ class Adapteur extends ArrayAdapter<Produit> {
         TextView textViewPrix;
 
         public ViewHolder(View view) {
-            textViewNom = (TextView) view.findViewById(R.id.nom);
-            textViewDescription = (TextView) view.findViewById(R.id.description);
-            textViewPrix = (TextView) view.findViewById(R.id.prix);
+            textViewNom = (TextView) view.findViewById(R.id.txtVNom);
+            textViewDescription = (TextView) view.findViewById(R.id.txtVDescription);
+            textViewPrix = (TextView) view.findViewById(R.id.txtVPrix);
         }
     }
 

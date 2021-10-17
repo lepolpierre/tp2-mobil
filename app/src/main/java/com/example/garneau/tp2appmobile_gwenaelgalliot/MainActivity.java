@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         FragmentLstVendeur fragmentLstVendeur = new FragmentLstVendeur();
+        FragmentLstClient fragmentLstUtilisateur = new FragmentLstClient();
 
         manager = getSupportFragmentManager();
 
@@ -35,20 +36,20 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
 
     }
-
-    @Database(entities = {Produit.class}, version = 1)
-    public abstract static class ProduitRoomBD extends RoomDatabase {
-
-        public static ProduitRoomDB INSTANCE;
-        //public abstract ProduitDao ProduitDao();
-
-        public static synchronized  ProduitRoomDB getDatabase(final Context context) {
-            if(INSTANCE == null){
-                INSTANCE = Room.databaseBuilder(context.getApplicationContext(),ProduitRoomDB.class,
-                        "produit_database").build();
-            }
-            return INSTANCE;
-        }
-
-    }
+//
+//    @Database(entities = {Produit.class}, version = 1)
+//    public abstract static class ProduitRoomBD extends RoomDatabase {
+//
+//        public static ProduitRoomDB INSTANCE;
+//        //public abstract ProduitDao ProduitDao();
+//
+//        public static synchronized  ProduitRoomDB getDatabase(final Context context) {
+//            if(INSTANCE == null){
+//                INSTANCE = Room.databaseBuilder(context.getApplicationContext(),ProduitRoomDB.class,
+//                        "produit_database").build();
+//            }
+//            return INSTANCE;
+//        }
+//
+//    }
 }
