@@ -57,12 +57,10 @@ public class FragmentLstVendeur extends Fragment {
         // Démarrage du fil d'exécution BD
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
-            public void run() {
-                mDb.ProduitDao().deleteAll();
-                Produit produit = new Produit("pomme","pomme verte", "1.0", "fruit", "2");
-                mDb.ProduitDao().insert(produit);
-                produit = new Produit("banane","banane verte", "1.5", "fruit", "5");
-                mDb.ProduitDao().insert(produit);
+
+           public void run() {
+
+
 
                 m_Produit = mDb.ProduitDao().getAllProducts();
 
