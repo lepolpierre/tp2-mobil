@@ -39,10 +39,4 @@
         android:layout_weight="1"
         android:text="txtVQtt" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="57dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="add" />
 </LinearLayout>
