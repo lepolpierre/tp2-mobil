@@ -9,6 +9,12 @@ import androidx.room.RoomDatabase;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.garneau.tp2appmobile_gwenaelgalliot.data.ProduitDao;
@@ -18,6 +24,7 @@ import com.example.garneau.tp2appmobile_gwenaelgalliot.model.Produit;
 public class MainActivity extends AppCompatActivity {
 
     private FragmentManager manager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +44,14 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
 
     }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        // Création du menu contextuel.
+        getMenuInflater().inflate(R.menu.context, menu);
+    }
+
+
 //
 //    @Database(entities = {Produit.class}, version = 1)
 //    public abstract static class ProduitRoomBD extends RoomDatabase {

@@ -25,18 +25,18 @@
         android:layout_weight="1"
         android:text="txtVPrix" />
 
-    <TextView
-        android:id="@+id/txtVCategorie"
-        android:layout_width="36dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:text="txtVCategorie" />
+<!--    <TextView-->
+<!--        android:id="@+id/txtVCategorie"-->
+<!--        android:layout_width="36dp"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_weight="1"-->
+<!--        android:text="txtVCategorie" />-->
 
-    <TextView
-        android:id="@+id/txtVQtt"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:text="txtVQtt" />
+<!--    <TextView-->
+<!--        android:id="@+id/txtVQtt"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_weight="1"-->
+<!--        android:text="txtVQtt" />-->
 
 </LinearLayout>

@@ -1,12 +1,18 @@
 package com.example.garneau.tp2appmobile_gwenaelgalliot;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
+import android.view.ContextMenu;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.garneau.tp2appmobile_gwenaelgalliot.data.AppExecutors;
@@ -43,7 +49,9 @@ public class FragmentLstVendeur extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_lst_vendeur, container, false);
         list = view.findViewById(R.id.listeVendeur);
+
         return view;
+
     }
 
 
@@ -77,6 +85,102 @@ public class FragmentLstVendeur extends Fragment {
                 });
             }
         });
-
+        registerForContextMenu(list);
     }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        // Lors du clic sur un item du menu contextuel associé à un élément de la liste.
+        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            // Modifier.
+            case R.id.menu_set:
+                // popup pour gérer l'interaction
+                handleSetWordMenu(menuInfo.position);
+                return true;
+
+            // Supprimer.
+            case R.id.menu_remove:
+                m_Produit.remove(menuInfo.position);
+                // notification de l'adapteur
+                m_Adapter.notifyDataSetChanged();
+                return true;
+
+            default:
+                Log.w("MainActivity", "Menu inconnu : " + item.getTitle());
+        }
+        return super.onContextItemSelected(item);
+    }
+
+    private void handleSetWordMenu(int p_Position) {
+        // Création de la View conteneur du popup
+        View setView = getLayoutInflater().inflate(R.layout.set, null);
+        // Récupération de l'EditText qui contiendra la nouvelle valeur : sur setView (et non pas this)
+        EditText txtSetNom = (EditText) setView.findViewById(R.id.txtSetNom);
+        EditText txtSetDescription = (EditText) setView.findViewById(R.id.txtSetDescription);
+        EditText txtSetPrix = (EditText) setView.findViewById(R.id.txtSetPrix);
+        EditText txtSetCategorie = (EditText) setView.findViewById(R.id.txtSetNom);
+        EditText txtSetQuantite = (EditText) setView.findViewById(R.id.txtSetNom);
+        // on y attache la valeur courante : l'utilisateur peut modifier ou réécrire
+        Produit c_row = m_Produit.get(p_Position);
+        txtSetNom.setText(c_row.getName());
+
+        // Création d'un objet permettant de gérer l'événement sur le bouton "OK" dans l'AlertDialog
+        BtnSetHandler setHandler = new BtnSetHandler(p_Position, txtSetNom,txtSetDescription,
+                txtSetPrix,txtSetCategorie,txtSetQuantite);
+
+        /** AlertDialog : c'est le popup
+         *  Un objet AlertDialog permet la définition à la volée de 2 boutons : typiquement Ok et Cancel
+         */
+        new AlertDialog.Builder(getActivity())
+                .setTitle("Modifier")
+                .setView(setView)
+                .setNegativeButton("Cancel", null)
+                .setPositiveButton("OK", setHandler)
+                .show();
+    }
+
+    private class BtnSetHandler implements DialogInterface.OnClickListener {
+        private int m_Position;
+        private EditText m_TxtSetNom;
+        private EditText m_TxtSetDescription;
+        private EditText m_TxtSetPrix;
+        private EditText m_TxtSetCategorie;
+        private EditText m_TxtSetQuabtite;
+
+
+        /**
+         * BtnSetHandler
+         *
+         * @param p_position
+         * @param p_txtSetNom
+         */
+        public BtnSetHandler(int p_position, EditText p_txtSetNom,EditText p_txtSetDescription,
+                             EditText p_txtSetPrix,EditText p_txtSetCategorie,EditText p_txtSetQuantite) {
+            this.m_Position = p_position;
+            this.m_TxtSetNom = p_txtSetNom;
+            this.m_TxtSetDescription = p_txtSetDescription;
+            this.m_TxtSetPrix = p_txtSetPrix;
+            this.m_TxtSetCategorie = p_txtSetCategorie;
+            this.m_TxtSetQuabtite = p_txtSetQuantite;
+        }
+
+        /**
+         * onClick
+         * modifiera la liste m_items (et pas directement la ListView de ListActivity)
+         * notifiera l'ArrayAdapter qui rechargera la ListView
+         *
+         * @param p_dialog
+         * @param p_which
+         */
+        @Override
+        public void onClick(DialogInterface p_dialog, int p_which) {
+            m_Produit.remove(m_Position);
+            m_Produit.add(m_Position, new Produit(m_TxtSetNom.getText().toString(),
+                    m_TxtSetDescription.getText().toString(),m_TxtSetPrix.getText().toString(),
+                    m_TxtSetCategorie.getText().toString(),m_TxtSetQuabtite.getText().toString()));
+            m_Adapter.notifyDataSetChanged();
+        }
+    }
+
 }
