@@ -20,8 +20,9 @@ public interface ProduitDao {
     @Query("SELECT * FROM produit_table")
     List<Produit> getAllProducts();
 
-//    @Query("UPDATE produit_table SET age_col = :age WHERE id = :id")
-//    int updateTodoItem(int id, int age);
+    @Query("UPDATE produit_table SET name_col = :name, description_col=:description" +
+            " WHERE id = :id")
+    int updateItem(int id, String name,String description);
 
 }
 

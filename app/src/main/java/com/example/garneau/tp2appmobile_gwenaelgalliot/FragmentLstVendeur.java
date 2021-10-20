@@ -3,7 +3,9 @@ package com.example.garneau.tp2appmobile_gwenaelgalliot;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
+
 import android.view.ContextMenu;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -66,9 +68,18 @@ public class FragmentLstVendeur extends Fragment {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
 
-           public void run() {
+            public void run() {
 
+//                mDb.ProduitDao().deleteAll();
+//                Produit produit = new Produit("pomme","pomme verte", "1.0", "fruit", "2");
+//                mDb.ProduitDao().insert(produit);
+//                produit = new Produit("banane","banane verte", "1.5", "fruit", "5");
+//                mDb.ProduitDao().insert(produit);
+//                produit = new Produit("poire","jolie poire", "1.2", "fruit", "5");
+//                mDb.ProduitDao().insert(produit);
+//                produit = new Produit("pizza","toute garnie", "7.3", "congeler", "5");
 
+                //mDb.ProduitDao().insert(produit);
 
                 m_Produit = mDb.ProduitDao().getAllProducts();
 
@@ -126,8 +137,8 @@ public class FragmentLstVendeur extends Fragment {
         txtSetNom.setText(c_row.getName());
 
         // Création d'un objet permettant de gérer l'événement sur le bouton "OK" dans l'AlertDialog
-        BtnSetHandler setHandler = new BtnSetHandler(p_Position, txtSetNom,txtSetDescription,
-                txtSetPrix,txtSetCategorie,txtSetQuantite);
+        BtnSetHandler setHandler = new BtnSetHandler(p_Position, txtSetNom, txtSetDescription,
+                txtSetPrix, txtSetCategorie, txtSetQuantite);
 
         /** AlertDialog : c'est le popup
          *  Un objet AlertDialog permet la définition à la volée de 2 boutons : typiquement Ok et Cancel
@@ -155,15 +166,61 @@ public class FragmentLstVendeur extends Fragment {
          * @param p_position
          * @param p_txtSetNom
          */
-        public BtnSetHandler(int p_position, EditText p_txtSetNom,EditText p_txtSetDescription,
-                             EditText p_txtSetPrix,EditText p_txtSetCategorie,EditText p_txtSetQuantite) {
+        public BtnSetHandler(int p_position, EditText p_txtSetNom, EditText p_txtSetDescription,
+                             EditText p_txtSetPrix, EditText p_txtSetCategorie, EditText p_txtSetQuantite) {
             this.m_Position = p_position;
             this.m_TxtSetNom = p_txtSetNom;
             this.m_TxtSetDescription = p_txtSetDescription;
             this.m_TxtSetPrix = p_txtSetPrix;
             this.m_TxtSetCategorie = p_txtSetCategorie;
             this.m_TxtSetQuabtite = p_txtSetQuantite;
+
+            String nom = p_txtSetNom.getText().toString();
+            String description = p_txtSetDescription.getText().toString();
         }
+
+//            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+//            @Override
+//            public void run() {
+//
+////                mDb.ProduitDao().deleteAll();
+////                Produit produit = new Produit("pomme","pomme verte", "1.0", "fruit", "2");
+////                mDb.ProduitDao().insert(produit);
+////                produit = new Produit("banane","banane verte", "1.5", "fruit", "5");
+////                mDb.ProduitDao().insert(produit);
+////                produit = new Produit("poire","jolie poire", "1.2", "fruit", "5");
+////                mDb.ProduitDao().insert(produit);
+////                produit = new Produit("pizza","toute garnie", "7.3", "congeler", "5");
+//
+//                //mDb.ProduitDao().insert(produit);
+//
+//                m_Produit = mDb.ProduitDao().getAllProducts();
+//
+//                getActivity().runOnUiThread(new Runnable() {
+//                    @Override
+//
+//                    public void run() {
+//                        // Instanciation de l'adapteur
+//                        m_Adapter = new Adapteur(getActivity(), m_Produit);
+//
+//                        // Passage de l'adapteur à la liste
+//                        list.setAdapter(m_Adapter);
+//                    }
+//                });
+//            }
+//        });
+
+
+//            getActivity().runOnUiThread(new Runnable() {
+//                @Override
+//
+//                public void run() {
+//                    mDb.ProduitDao().updateItem(p_position, nom, description);
+//                }
+//            });
+
+
+
 
         /**
          * onClick
@@ -177,9 +234,20 @@ public class FragmentLstVendeur extends Fragment {
         public void onClick(DialogInterface p_dialog, int p_which) {
             m_Produit.remove(m_Position);
             m_Produit.add(m_Position, new Produit(m_TxtSetNom.getText().toString(),
-                    m_TxtSetDescription.getText().toString(),m_TxtSetPrix.getText().toString(),
-                    m_TxtSetCategorie.getText().toString(),m_TxtSetQuabtite.getText().toString()));
+                    m_TxtSetDescription.getText().toString(), m_TxtSetPrix.getText().toString(),
+                    m_TxtSetCategorie.getText().toString(), m_TxtSetQuabtite.getText().toString()));
             m_Adapter.notifyDataSetChanged();
+
+
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    mDb.ProduitDao().updateItem(m_Position+1, m_TxtSetNom.getText().toString(),
+                            m_TxtSetDescription.getText().toString());
+
+                    // 2eme....
+                }
+            });
         }
     }
 

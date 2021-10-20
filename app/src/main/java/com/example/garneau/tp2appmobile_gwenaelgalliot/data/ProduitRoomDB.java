@@ -22,8 +22,12 @@ public abstract class ProduitRoomDB extends RoomDatabase {
             // Crée la BDD
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                     ProduitRoomDB.class, "produit_database")
+                    .allowMainThreadQueries()
                     .build();
         }
+
         return INSTANCE;
     }
+
+
 }
