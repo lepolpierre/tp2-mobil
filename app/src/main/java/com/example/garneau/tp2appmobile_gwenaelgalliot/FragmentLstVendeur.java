@@ -14,8 +14,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Switch;
 
 import com.example.garneau.tp2appmobile_gwenaelgalliot.data.AppExecutors;
 import com.example.garneau.tp2appmobile_gwenaelgalliot.data.ProduitRoomDB;
@@ -34,6 +36,7 @@ public class FragmentLstVendeur extends Fragment {
 
     private Adapteur m_Adapter;
 
+
     public FragmentLstVendeur() {
         // Required empty public constructor
     }
@@ -51,7 +54,11 @@ public class FragmentLstVendeur extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_lst_vendeur, container, false);
         list = view.findViewById(R.id.listeVendeur);
-
+//        switchAdmin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+////            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+////                handleSetWordMenu();
+////            }
+//        });
         return view;
 
     }
@@ -103,52 +110,56 @@ public class FragmentLstVendeur extends Fragment {
     public boolean onContextItemSelected(MenuItem item) {
         // Lors du clic sur un item du menu contextuel associé à un élément de la liste.
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        switch (item.getItemId()) {
-            // Modifier.
-            case R.id.menu_set:
-                // popup pour gérer l'interaction
-                handleSetWordMenu(menuInfo.position);
-                return true;
 
-            // Supprimer.
-            case R.id.menu_remove:
-                m_Produit.remove(menuInfo.position);
-                // notification de l'adapteur
-                m_Adapter.notifyDataSetChanged();
-                return true;
+            switch (item.getItemId()) {
+                // Modifier.
+                case R.id.menu_set:
+                    // popup pour gérer l'interaction
+                    handleSetWordMenu(menuInfo.position);
+                    return true;
 
-            default:
-                Log.w("MainActivity", "Menu inconnu : " + item.getTitle());
-        }
+                // Supprimer.
+                case R.id.menu_remove:
+                    m_Produit.remove(menuInfo.position);
+                    // notification de l'adapteur
+                    m_Adapter.notifyDataSetChanged();
+                    return true;
+
+                default:
+                    Log.w("MainActivity", "Menu inconnu : " + item.getTitle());
+            }
+
         return super.onContextItemSelected(item);
     }
 
     private void handleSetWordMenu(int p_Position) {
         // Création de la View conteneur du popup
-        View setView = getLayoutInflater().inflate(R.layout.set, null);
-        // Récupération de l'EditText qui contiendra la nouvelle valeur : sur setView (et non pas this)
-        EditText txtSetNom = (EditText) setView.findViewById(R.id.txtSetNom);
-        EditText txtSetDescription = (EditText) setView.findViewById(R.id.txtSetDescription);
-        EditText txtSetPrix = (EditText) setView.findViewById(R.id.txtSetPrix);
-        EditText txtSetCategorie = (EditText) setView.findViewById(R.id.txtSetNom);
-        EditText txtSetQuantite = (EditText) setView.findViewById(R.id.txtSetNom);
-        // on y attache la valeur courante : l'utilisateur peut modifier ou réécrire
-        Produit c_row = m_Produit.get(p_Position);
-        txtSetNom.setText(c_row.getName());
+            View setView = getLayoutInflater().inflate(R.layout.set, null);
+            // Récupération de l'EditText qui contiendra la nouvelle valeur : sur setView (et non pas this)
+            EditText txtSetNom = (EditText) setView.findViewById(R.id.txtSetNom);
+            EditText txtSetDescription = (EditText) setView.findViewById(R.id.txtSetDescription);
+            EditText txtSetPrix = (EditText) setView.findViewById(R.id.txtSetPrix);
+            EditText txtSetCategorie = (EditText) setView.findViewById(R.id.txtSetNom);
+            EditText txtSetQuantite = (EditText) setView.findViewById(R.id.txtSetNom);
+            // on y attache la valeur courante : l'utilisateur peut modifier ou réécrire
+            Produit c_row = m_Produit.get(p_Position);
+            txtSetNom.setText(c_row.getName());
 
-        // Création d'un objet permettant de gérer l'événement sur le bouton "OK" dans l'AlertDialog
-        BtnSetHandler setHandler = new BtnSetHandler(p_Position, txtSetNom, txtSetDescription,
-                txtSetPrix, txtSetCategorie, txtSetQuantite);
+            // Création d'un objet permettant de gérer l'événement sur le bouton "OK" dans l'AlertDialog
+            BtnSetHandler setHandler = new BtnSetHandler(p_Position, txtSetNom, txtSetDescription,
+                    txtSetPrix, txtSetCategorie, txtSetQuantite);
 
-        /** AlertDialog : c'est le popup
-         *  Un objet AlertDialog permet la définition à la volée de 2 boutons : typiquement Ok et Cancel
-         */
-        new AlertDialog.Builder(getActivity())
-                .setTitle("Modifier")
-                .setView(setView)
-                .setNegativeButton("Cancel", null)
-                .setPositiveButton("OK", setHandler)
-                .show();
+            /** AlertDialog : c'est le popup
+             *  Un objet AlertDialog permet la définition à la volée de 2 boutons : typiquement Ok et Cancel
+             */
+            new AlertDialog.Builder(getActivity())
+                    .setTitle("Modifier")
+                    .setView(setView)
+                    .setNegativeButton("Cancel", null)
+                    .setPositiveButton("OK", setHandler)
+                    .show();
+
+
     }
 
     private class BtnSetHandler implements DialogInterface.OnClickListener {
@@ -179,48 +190,6 @@ public class FragmentLstVendeur extends Fragment {
             String description = p_txtSetDescription.getText().toString();
         }
 
-//            AppExecutors.getInstance().diskIO().execute(new Runnable() {
-//            @Override
-//            public void run() {
-//
-////                mDb.ProduitDao().deleteAll();
-////                Produit produit = new Produit("pomme","pomme verte", "1.0", "fruit", "2");
-////                mDb.ProduitDao().insert(produit);
-////                produit = new Produit("banane","banane verte", "1.5", "fruit", "5");
-////                mDb.ProduitDao().insert(produit);
-////                produit = new Produit("poire","jolie poire", "1.2", "fruit", "5");
-////                mDb.ProduitDao().insert(produit);
-////                produit = new Produit("pizza","toute garnie", "7.3", "congeler", "5");
-//
-//                //mDb.ProduitDao().insert(produit);
-//
-//                m_Produit = mDb.ProduitDao().getAllProducts();
-//
-//                getActivity().runOnUiThread(new Runnable() {
-//                    @Override
-//
-//                    public void run() {
-//                        // Instanciation de l'adapteur
-//                        m_Adapter = new Adapteur(getActivity(), m_Produit);
-//
-//                        // Passage de l'adapteur à la liste
-//                        list.setAdapter(m_Adapter);
-//                    }
-//                });
-//            }
-//        });
-
-
-//            getActivity().runOnUiThread(new Runnable() {
-//                @Override
-//
-//                public void run() {
-//                    mDb.ProduitDao().updateItem(p_position, nom, description);
-//                }
-//            });
-
-
-
 
         /**
          * onClick
@@ -244,11 +213,11 @@ public class FragmentLstVendeur extends Fragment {
                 public void run() {
                     mDb.ProduitDao().updateItem(m_Position+1, m_TxtSetNom.getText().toString(),
                             m_TxtSetDescription.getText().toString());
-
-                    // 2eme....
                 }
             });
         }
+
+
     }
 
 }
