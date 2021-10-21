@@ -18,6 +18,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.example.garneau.tp2appmobile_gwenaelgalliot.data.AppExecutors;
 import com.example.garneau.tp2appmobile_gwenaelgalliot.data.ProduitRoomDB;
@@ -54,11 +55,6 @@ public class FragmentLstVendeur extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_lst_vendeur, container, false);
         list = view.findViewById(R.id.listeVendeur);
-//        switchAdmin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-////            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-////                handleSetWordMenu();
-////            }
-//        });
         return view;
 
     }
@@ -110,23 +106,25 @@ public class FragmentLstVendeur extends Fragment {
     public boolean onContextItemSelected(MenuItem item) {
         // Lors du clic sur un item du menu contextuel associé à un élément de la liste.
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        Switch switchAdmin = (Switch) getView().findViewById(R.id.switchAdmin);
 
-            switch (item.getItemId()) {
-                // Modifier.
-                case R.id.menu_set:
-                    // popup pour gérer l'interaction
-                    handleSetWordMenu(menuInfo.position);
-                    return true;
 
-                // Supprimer.
-                case R.id.menu_remove:
-                    m_Produit.remove(menuInfo.position);
-                    // notification de l'adapteur
-                    m_Adapter.notifyDataSetChanged();
-                    return true;
+        switch (item.getItemId()) {
+            // Modifier.
+            case R.id.menu_set:
+                // popup pour gérer l'interaction
+                handleSetWordMenu(menuInfo.position);
+                return true;
 
-                default:
-                    Log.w("MainActivity", "Menu inconnu : " + item.getTitle());
+            // Supprimer.
+            case R.id.menu_remove:
+                m_Produit.remove(menuInfo.position);
+                // notification de l'adapteur
+                m_Adapter.notifyDataSetChanged();
+                return true;
+
+            default:
+                Log.w("MainActivity", "Menu inconnu : " + item.getTitle());
             }
 
         return super.onContextItemSelected(item);
