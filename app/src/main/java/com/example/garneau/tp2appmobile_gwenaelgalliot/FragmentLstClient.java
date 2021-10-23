@@ -6,35 +6,41 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.example.garneau.tp2appmobile_gwenaelgalliot.data.AppExecutors;
 import com.example.garneau.tp2appmobile_gwenaelgalliot.data.ProduitRoomDB;
 import com.example.garneau.tp2appmobile_gwenaelgalliot.model.Produit;
 
+import java.io.Serializable;
 import java.util.List;
 
 
 public class FragmentLstClient extends Fragment {
 
-    private List<Produit> m_Produit;
+    static private List<Produit> m_Produit;
 
     private ListView list;
 
-    private ProduitRoomDB mDb;
-
-    private Adapteur m_Adapter;
+    private AdapteurPanier m_Adapter;
 
     public FragmentLstClient() {
         // Required empty public constructor
     }
 
 
-    public static FragmentLstClient newInstance(String produit) {
+    public static FragmentLstClient newInstance(Produit unProduit) {
         FragmentLstClient fragment = new FragmentLstClient();
-        Bundle args = new Bundle();
-        args.putString("produit", produit);
-        fragment.setArguments(args);
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable("unProduit", (Serializable) unProduit);
+//        fragment.setArguments(bundle);
+        Produit nouveauProduit = (Produit) fragment.getArguments().getSerializable("produit");
+        m_Produit.add(nouveauProduit);
+
         return fragment;
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,8 @@ public class FragmentLstClient extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_lst_client, container, false);
         list = view.findViewById(R.id.listeClient);
+
+
         return view;
     }
 
@@ -55,6 +63,19 @@ public class FragmentLstClient extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle saveInstanceState) {
         super.onViewCreated(view, saveInstanceState);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
 
+            public void run() {
+                // Instanciation de l'adapteur
+                if (m_Produit != null){
+                    m_Adapter = new AdapteurPanier(getActivity(), m_Produit);
+
+                    // Passage de l'adapteur à la liste
+                    list.setAdapter(m_Adapter);
+                }
+
+            }
+        });
     }
 }

@@ -1,41 +1,42 @@
 package com.example.garneau.tp2appmobile_gwenaelgalliot;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.view.ContextMenu;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import com.example.garneau.tp2appmobile_gwenaelgalliot.data.AppExecutors;
 import com.example.garneau.tp2appmobile_gwenaelgalliot.data.ProduitRoomDB;
 import com.example.garneau.tp2appmobile_gwenaelgalliot.model.Produit;
 
+import java.io.Serializable;
 import java.util.List;
 
 
 public class FragmentLstVendeur extends Fragment {
 
     private List<Produit> m_Produit;
+    private List<Produit> m_Panier;
+
 
     private ListView list;
 
     private ProduitRoomDB mDb;
 
-    private Adapteur m_Adapter;
+    private AdapteurVendeur m_Adapter;
 
 
     public FragmentLstVendeur() {
@@ -55,6 +56,19 @@ public class FragmentLstVendeur extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_lst_vendeur, container, false);
         list = view.findViewById(R.id.listeVendeur);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Produit unProduit = m_Adapter.getItem(position);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("produit",(Serializable)unProduit);
+                FragmentLstClient frag = new FragmentLstClient();
+                frag.setArguments(bundle);
+                //m_Panier.add(unProduit);
+                getFragmentManager().beginTransaction().add(R.id.frameClient, frag).commit();
+            }
+        });
         return view;
 
     }
@@ -91,7 +105,7 @@ public class FragmentLstVendeur extends Fragment {
 
                     public void run() {
                         // Instanciation de l'adapteur
-                        m_Adapter = new Adapteur(getActivity(), m_Produit);
+                        m_Adapter = new AdapteurVendeur(getActivity(), m_Produit);
 
                         // Passage de l'adapteur à la liste
                         list.setAdapter(m_Adapter);
@@ -125,37 +139,37 @@ public class FragmentLstVendeur extends Fragment {
 
             default:
                 Log.w("MainActivity", "Menu inconnu : " + item.getTitle());
-            }
+        }
 
         return super.onContextItemSelected(item);
     }
 
     private void handleSetWordMenu(int p_Position) {
         // Création de la View conteneur du popup
-            View setView = getLayoutInflater().inflate(R.layout.set, null);
-            // Récupération de l'EditText qui contiendra la nouvelle valeur : sur setView (et non pas this)
-            EditText txtSetNom = (EditText) setView.findViewById(R.id.txtSetNom);
-            EditText txtSetDescription = (EditText) setView.findViewById(R.id.txtSetDescription);
-            EditText txtSetPrix = (EditText) setView.findViewById(R.id.txtSetPrix);
-            EditText txtSetCategorie = (EditText) setView.findViewById(R.id.txtSetNom);
-            EditText txtSetQuantite = (EditText) setView.findViewById(R.id.txtSetNom);
-            // on y attache la valeur courante : l'utilisateur peut modifier ou réécrire
-            Produit c_row = m_Produit.get(p_Position);
-            txtSetNom.setText(c_row.getName());
+        View setView = getLayoutInflater().inflate(R.layout.set, null);
+        // Récupération de l'EditText qui contiendra la nouvelle valeur : sur setView (et non pas this)
+        EditText txtSetNom = (EditText) setView.findViewById(R.id.txtSetNom);
+        EditText txtSetDescription = (EditText) setView.findViewById(R.id.txtSetDescription);
+        EditText txtSetPrix = (EditText) setView.findViewById(R.id.txtSetPrix);
+        EditText txtSetCategorie = (EditText) setView.findViewById(R.id.txtSetNom);
+        EditText txtSetQuantite = (EditText) setView.findViewById(R.id.txtSetNom);
+        // on y attache la valeur courante : l'utilisateur peut modifier ou réécrire
+        Produit c_row = m_Produit.get(p_Position);
+        txtSetNom.setText(c_row.getName());
 
-            // Création d'un objet permettant de gérer l'événement sur le bouton "OK" dans l'AlertDialog
-            BtnSetHandler setHandler = new BtnSetHandler(p_Position, txtSetNom, txtSetDescription,
-                    txtSetPrix, txtSetCategorie, txtSetQuantite);
+        // Création d'un objet permettant de gérer l'événement sur le bouton "OK" dans l'AlertDialog
+        BtnSetHandler setHandler = new BtnSetHandler(p_Position, txtSetNom, txtSetDescription,
+                txtSetPrix, txtSetCategorie, txtSetQuantite);
 
-            /** AlertDialog : c'est le popup
-             *  Un objet AlertDialog permet la définition à la volée de 2 boutons : typiquement Ok et Cancel
-             */
-            new AlertDialog.Builder(getActivity())
-                    .setTitle("Modifier")
-                    .setView(setView)
-                    .setNegativeButton("Cancel", null)
-                    .setPositiveButton("OK", setHandler)
-                    .show();
+        /** AlertDialog : c'est le popup
+         *  Un objet AlertDialog permet la définition à la volée de 2 boutons : typiquement Ok et Cancel
+         */
+        new AlertDialog.Builder(getActivity())
+                .setTitle("Modifier")
+                .setView(setView)
+                .setNegativeButton("Cancel", null)
+                .setPositiveButton("OK", setHandler)
+                .show();
 
 
     }
@@ -184,10 +198,7 @@ public class FragmentLstVendeur extends Fragment {
             this.m_TxtSetCategorie = p_txtSetCategorie;
             this.m_TxtSetQuabtite = p_txtSetQuantite;
 
-            String nom = p_txtSetNom.getText().toString();
-            String description = p_txtSetDescription.getText().toString();
         }
-
 
         /**
          * onClick
@@ -209,7 +220,7 @@ public class FragmentLstVendeur extends Fragment {
             AppExecutors.getInstance().diskIO().execute(new Runnable() {
                 @Override
                 public void run() {
-                    mDb.ProduitDao().updateItem(m_Position+1, m_TxtSetNom.getText().toString(),
+                    mDb.ProduitDao().updateItem(m_Position + 1, m_TxtSetNom.getText().toString(),
                             m_TxtSetDescription.getText().toString());
                 }
             });

@@ -12,12 +12,13 @@ import com.example.garneau.tp2appmobile_gwenaelgalliot.model.Produit;
 
 import java.util.List;
 
-class Adapteur extends ArrayAdapter<Produit> {
+public class AdapteurPanier extends ArrayAdapter<Produit> {
 
     private Context contexte;
     private List<Produit> rowModels;
 
-    public Adapteur(Activity context, List<Produit> m_RowModels) {
+
+    public AdapteurPanier(Activity context, List<Produit> m_RowModels) {
 
         super(context, R.layout.row, R.id.txtVNom, m_RowModels);
 

@@ -8,8 +8,10 @@ import androidx.room.RoomDatabase;
 
 import com.example.garneau.tp2appmobile_gwenaelgalliot.model.Produit;
 
+import java.io.Serializable;
+
 @Database(entities = {Produit.class}, version = 1)
-public abstract class ProduitRoomDB extends RoomDatabase {
+public abstract class ProduitRoomDB extends RoomDatabase implements Serializable {
 
     // Singleton
     public static ProduitRoomDB INSTANCE;
