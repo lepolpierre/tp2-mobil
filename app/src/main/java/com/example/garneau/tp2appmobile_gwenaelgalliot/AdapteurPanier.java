@@ -20,10 +20,11 @@ public class AdapteurPanier extends ArrayAdapter<Produit> {
 
     public AdapteurPanier(Activity context, List<Produit> m_RowModels) {
 
-        super(context, R.layout.row, R.id.txtVNom, m_RowModels);
+        super(context, R.layout.row_panier, R.id.txtVNom2, m_RowModels);
 
         contexte = context;
         rowModels = m_RowModels;
+
     }
 
     public void setList(List<Produit> liste) {
@@ -36,7 +37,7 @@ public class AdapteurPanier extends ArrayAdapter<Produit> {
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) contexte.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.row, parent, false);
+            convertView = inflater.inflate(R.layout.row_panier, parent, false);
             viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         }
@@ -48,6 +49,7 @@ public class AdapteurPanier extends ArrayAdapter<Produit> {
         viewHolder.textViewDescription.setText(rowData.getDescription());
         viewHolder.textViewNom.setText(rowData.getName());
         viewHolder.textViewPrix.setText(rowData.getPrix());
+        viewHolder.textViewQuantite.setText(rowData.getQuantite());
 
         return row;
     }
@@ -56,11 +58,13 @@ public class AdapteurPanier extends ArrayAdapter<Produit> {
         TextView textViewNom;
         TextView textViewDescription;
         TextView textViewPrix;
+        TextView textViewQuantite;
 
         public ViewHolder(View view) {
-            textViewNom = (TextView) view.findViewById(R.id.txtVNom);
-            textViewDescription = (TextView) view.findViewById(R.id.txtVDescription);
-            textViewPrix = (TextView) view.findViewById(R.id.txtVPrix);
+            textViewNom = (TextView) view.findViewById(R.id.txtVNom2);
+            textViewDescription = (TextView) view.findViewById(R.id.txtVDescription2);
+            textViewPrix = (TextView) view.findViewById(R.id.txtVPrix2);
+            textViewQuantite = (TextView) view.findViewById(R.id.txtVQuantite);
         }
     }
 

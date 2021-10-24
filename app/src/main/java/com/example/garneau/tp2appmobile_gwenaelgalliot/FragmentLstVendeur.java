@@ -91,16 +91,16 @@ public class FragmentLstVendeur extends Fragment {
 
             public void run() {
 
-//                mDb.ProduitDao().deleteAll();
-//                Produit produit = new Produit("pomme","pomme verte", "1.0", "fruit", "2");
-//                mDb.ProduitDao().insert(produit);
-//                produit = new Produit("banane","banane verte", "1.5", "fruit", "5");
-//                mDb.ProduitDao().insert(produit);
-//                produit = new Produit("poire","jolie poire", "1.2", "fruit", "5");
-//                mDb.ProduitDao().insert(produit);
-//                produit = new Produit("pizza","toute garnie", "7.3", "congeler", "5");
+                mDb.ProduitDao().deleteAll();
+                Produit produit = new Produit("pomme","pomme verte", "1.0", "fruit", "2");
+                mDb.ProduitDao().insert(produit);
+                produit = new Produit("banane","banane verte", "1.5", "fruit", "5");
+                mDb.ProduitDao().insert(produit);
+                produit = new Produit("poire","jolie poire", "1.2", "fruit", "5");
+                mDb.ProduitDao().insert(produit);
+                produit = new Produit("pizza","toute garnie", "7.3", "congeler", "5");
 
-                //mDb.ProduitDao().insert(produit);
+                mDb.ProduitDao().insert(produit);
 
                 m_Produit = mDb.ProduitDao().getAllProducts();
 
@@ -123,8 +123,10 @@ public class FragmentLstVendeur extends Fragment {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         // Lors du clic sur un item du menu contextuel associé à un élément de la liste.
+        Switch switchAdmin = MainActivity.switchAdmin;
+
+
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        Switch switchAdmin = (Switch) getView().findViewById(R.id.switchAdmin);
 
 
         switch (item.getItemId()) {

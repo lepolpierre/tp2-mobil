@@ -1,6 +1,7 @@
 package com.example.garneau.tp2appmobile_gwenaelgalliot;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.ActionMenuItem;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -26,8 +27,11 @@ public class MainActivity extends AppCompatActivity implements FragmentLstVendeu
 
     private FragmentManager manager;
     static public List<Produit> panier;
+    MenuItem menuItem;
+    MenuItem menuItemSet;
+    MenuItem menuItemRemove;
 
-    public Switch switchAdmin ;
+    static public Switch switchAdmin ;
     boolean switchState;
 
 
@@ -53,16 +57,25 @@ public class MainActivity extends AppCompatActivity implements FragmentLstVendeu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        MenuItem menuItem = menu.findItem(R.id.switchAdmin);
+        menuItem = menu.findItem(R.id.switchAdmin);
         View view = MenuItemCompat.getActionView(menuItem);
-        Switch switchAdmin = (Switch) view.findViewById(R.id.Switch);
+        switchAdmin = (Switch) view.findViewById(R.id.Switch);
+        menuItemSet = menu.findItem(R.id.menu_set);
+        menuItemRemove = menu.findItem(R.id.menu_remove);
+
+
         switchAdmin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
                     Toast.makeText(MainActivity.this, "This is on", Toast.LENGTH_SHORT).show();
+                    menuItemSet.setVisible(true);
+                    menuItemRemove.setVisible(true);
+
                 } else {
                     Toast.makeText(MainActivity.this, "This is off", Toast.LENGTH_SHORT).show();
+                    menuItemSet.setVisible(false);
+                    menuItemRemove.setVisible(false);
                 }
             }
         });
@@ -78,7 +91,28 @@ public class MainActivity extends AppCompatActivity implements FragmentLstVendeu
     }
 
     public void ajoutPanier(Produit unProduit) {
-        panier.add(unProduit);
+
+        if (findProduit(unProduit.getName())!= null){
+            int quantite = Integer.valueOf(unProduit.getQuantite());
+            quantite = quantite + 1;
+            String nouvelleQuantite = String.valueOf(quantite);
+            unProduit.setQuantite(nouvelleQuantite);
+        }
+        else{
+            panier.add(unProduit);
+        }
+
+    }
+
+    public Produit findProduit (
+            String name) {
+
+        for (Produit produit : panier) {
+            if (produit.getName().equals(name)) {
+                return produit;
+            }
+        }
+        return null;
     }
 
 }

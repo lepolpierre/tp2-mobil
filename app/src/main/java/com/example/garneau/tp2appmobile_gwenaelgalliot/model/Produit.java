@@ -25,7 +25,7 @@ public class Produit implements Serializable {
     @ColumnInfo(name = "Categorie_col")
     private String categorie;
 
-    @ColumnInfo(name = "Quantite_col")
+    @ColumnInfo(name = "Quantite_col", defaultValue = "1")
     private String quantite;
 
     public Produit(String name, String description, String prix, String categorie, String quantite) {
