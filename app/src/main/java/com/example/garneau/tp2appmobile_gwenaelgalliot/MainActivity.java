@@ -17,9 +17,15 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.garneau.tp2appmobile_gwenaelgalliot.model.Produit;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements FragmentLstVendeur.ParlerALActivite{
 
     private FragmentManager manager;
+    static public List<Produit> panier;
 
     public Switch switchAdmin ;
     boolean switchState;
@@ -32,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentLstVendeur fragmentLstVendeur = new FragmentLstVendeur();
         FragmentLstClient fragmentLstClient = new FragmentLstClient();
-
+        panier = new ArrayList<>();
         manager = getSupportFragmentManager();
 
         FragmentTransaction transaction = manager.beginTransaction();
@@ -71,5 +77,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void ajoutPanier(Produit unProduit) {
+        panier.add(unProduit);
+    }
 
 }

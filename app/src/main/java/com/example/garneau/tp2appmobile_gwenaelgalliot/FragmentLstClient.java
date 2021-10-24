@@ -13,11 +13,11 @@ import com.example.garneau.tp2appmobile_gwenaelgalliot.data.ProduitRoomDB;
 import com.example.garneau.tp2appmobile_gwenaelgalliot.model.Produit;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class FragmentLstClient extends Fragment {
-
     static private List<Produit> m_Produit;
 
     private ListView list;
@@ -26,6 +26,7 @@ public class FragmentLstClient extends Fragment {
 
     public FragmentLstClient() {
         // Required empty public constructor
+        //m_Produit = MainActivity.panier;
     }
 
 
@@ -34,8 +35,8 @@ public class FragmentLstClient extends Fragment {
 //        Bundle bundle = new Bundle();
 //        bundle.putSerializable("unProduit", (Serializable) unProduit);
 //        fragment.setArguments(bundle);
-        Produit nouveauProduit = (Produit) fragment.getArguments().getSerializable("produit");
-        m_Produit.add(nouveauProduit);
+//        Produit nouveauProduit = (Produit) fragment.getArguments().getSerializable("produit");
+//        m_Produit.add(nouveauProduit);
 
         return fragment;
     }
@@ -54,7 +55,8 @@ public class FragmentLstClient extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_lst_client, container, false);
         list = view.findViewById(R.id.listeClient);
-
+        m_Produit = new ArrayList<>();
+        m_Produit = MainActivity.panier;
 
         return view;
     }
@@ -63,9 +65,15 @@ public class FragmentLstClient extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle saveInstanceState) {
         super.onViewCreated(view, saveInstanceState);
+
+//        Bundle bundle = getArguments();
+//        if (bundle != null){
+//            Produit unProduit = (Produit)bundle.getSerializable("produit");
+//            m_Produit.add(unProduit);
+//        }
+
         getActivity().runOnUiThread(new Runnable() {
             @Override
-
             public void run() {
                 // Instanciation de l'adapteur
                 if (m_Produit != null){

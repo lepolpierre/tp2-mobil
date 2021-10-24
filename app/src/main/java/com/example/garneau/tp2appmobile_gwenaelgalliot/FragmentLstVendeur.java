@@ -2,6 +2,7 @@ package com.example.garneau.tp2appmobile_gwenaelgalliot;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,9 +29,9 @@ import java.util.List;
 
 public class FragmentLstVendeur extends Fragment {
 
+    private ParlerALActivite mListener;
     private List<Produit> m_Produit;
     private List<Produit> m_Panier;
-
 
     private ListView list;
 
@@ -41,6 +42,7 @@ public class FragmentLstVendeur extends Fragment {
 
     public FragmentLstVendeur() {
         // Required empty public constructor
+
     }
 
 
@@ -66,6 +68,8 @@ public class FragmentLstVendeur extends Fragment {
                 FragmentLstClient frag = new FragmentLstClient();
                 frag.setArguments(bundle);
                 //m_Panier.add(unProduit);
+                mListener.ajoutPanier(unProduit);
+
                 getFragmentManager().beginTransaction().add(R.id.frameClient, frag).commit();
             }
         });
@@ -229,4 +233,28 @@ public class FragmentLstVendeur extends Fragment {
 
     }
 
+    public interface ParlerALActivite {
+        void ajoutPanier(Produit unProduit);
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        // Si MainActivity implémente l'interface (=devient une instance d'OnFragmentInteractionListener)
+        if (context instanceof ParlerALActivite) {
+            // alors l'objet mListener devient le contexte appelant (= l'activité)
+            mListener = (ParlerALActivite) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    // méthode inverse de la précédente dans le cycle de vie du Fragment
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
 }
