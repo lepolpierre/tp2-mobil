@@ -13,6 +13,40 @@
         android:layout_height="wrap_content"
         android:text="LstUtilisateur" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtVPNom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="nom" />
+
+        <TextView
+            android:id="@+id/txtVPDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Prix" />
+
+        <TextView
+            android:id="@+id/txtVPPrix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Description" />
+
+        <TextView
+            android:id="@+id/txtVPQtt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Quantite" />
+    </LinearLayout>
+
     <ListView
         android:id="@+id/listeClient"
         android:layout_width="match_parent"

@@ -26,17 +26,11 @@ public class FragmentLstClient extends Fragment {
 
     public FragmentLstClient() {
         // Required empty public constructor
-        //m_Produit = MainActivity.panier;
     }
 
 
     public static FragmentLstClient newInstance(Produit unProduit) {
         FragmentLstClient fragment = new FragmentLstClient();
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable("unProduit", (Serializable) unProduit);
-//        fragment.setArguments(bundle);
-//        Produit nouveauProduit = (Produit) fragment.getArguments().getSerializable("produit");
-//        m_Produit.add(nouveauProduit);
 
         return fragment;
     }
@@ -66,11 +60,6 @@ public class FragmentLstClient extends Fragment {
     public void onViewCreated(View view, Bundle saveInstanceState) {
         super.onViewCreated(view, saveInstanceState);
 
-//        Bundle bundle = getArguments();
-//        if (bundle != null){
-//            Produit unProduit = (Produit)bundle.getSerializable("produit");
-//            m_Produit.add(unProduit);
-//        }
 
         getActivity().runOnUiThread(new Runnable() {
             @Override

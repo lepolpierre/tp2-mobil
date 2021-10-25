@@ -2,6 +2,7 @@ package com.example.garneau.tp2appmobile_gwenaelgalliot;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,8 +32,7 @@ public class FragmentLstVendeur extends Fragment {
 
     private ParlerALActivite mListener;
     private List<Produit> m_Produit;
-    private List<Produit> m_Panier;
-
+    private Switch switchAdmin;
     private ListView list;
 
     private ProduitRoomDB mDb;
@@ -42,7 +42,6 @@ public class FragmentLstVendeur extends Fragment {
 
     public FragmentLstVendeur() {
         // Required empty public constructor
-
     }
 
 
@@ -58,7 +57,7 @@ public class FragmentLstVendeur extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_lst_vendeur, container, false);
         list = view.findViewById(R.id.listeVendeur);
-
+        switchAdmin = (Switch) view.findViewById(R.id.switchAdmin);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -67,7 +66,6 @@ public class FragmentLstVendeur extends Fragment {
                 bundle.putSerializable("produit",(Serializable)unProduit);
                 FragmentLstClient frag = new FragmentLstClient();
                 frag.setArguments(bundle);
-                //m_Panier.add(unProduit);
                 mListener.ajoutPanier(unProduit);
 
                 getFragmentManager().beginTransaction().add(R.id.frameClient, frag).commit();
@@ -91,22 +89,26 @@ public class FragmentLstVendeur extends Fragment {
 
             public void run() {
 
-                mDb.ProduitDao().deleteAll();
-                Produit produit = new Produit("pomme","pomme verte", "1.0", "fruit", "2");
-                mDb.ProduitDao().insert(produit);
-                produit = new Produit("banane","banane verte", "1.5", "fruit", "5");
-                mDb.ProduitDao().insert(produit);
-                produit = new Produit("poire","jolie poire", "1.2", "fruit", "5");
-                mDb.ProduitDao().insert(produit);
-                produit = new Produit("pizza","toute garnie", "7.3", "congeler", "5");
 
-                mDb.ProduitDao().insert(produit);
+//                 AJOUT DES DONNES DANS LA BD
+//                mDb.ProduitDao().deleteAll();
+//                Produit produit = new Produit("pomme","pomme verte", "1.0", "fruit", "1");
+//                mDb.ProduitDao().insert(produit);
+//                produit = new Produit("banane","banane verte", "1.5", "fruit", "1");
+//                mDb.ProduitDao().insert(produit);
+//                produit = new Produit("poire","jolie poire", "1.2", "fruit", "1");
+//                mDb.ProduitDao().insert(produit);
+//                produit = new Produit("pizza","toute garnie", "7.3", "congeler", "1");
+//
+//                mDb.ProduitDao().insert(produit);
 
+
+//                recuperation des donnees dans la bd
                 m_Produit = mDb.ProduitDao().getAllProducts();
 
+//                passage de la liste de la bd dans le liste view par l'adaptateur
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
-
                     public void run() {
                         // Instanciation de l'adapteur
                         m_Adapter = new AdapteurVendeur(getActivity(), m_Produit);
@@ -123,45 +125,48 @@ public class FragmentLstVendeur extends Fragment {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         // Lors du clic sur un item du menu contextuel associé à un élément de la liste.
-        Switch switchAdmin = MainActivity.switchAdmin;
 
+            AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
-        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            switch (item.getItemId()) {
+                // Modifier.
+                case R.id.menu_set:
+                    // popup pour gérer l'interaction
+                    handleSetProduitMenu(menuInfo.position);
+                    return true;
 
+                // Supprimer.
+                case R.id.menu_remove:
+                    m_Produit.remove(menuInfo.position);
+                    // notification de l'adapteur
+                    m_Adapter.notifyDataSetChanged();
+                    return true;
 
-        switch (item.getItemId()) {
-            // Modifier.
-            case R.id.menu_set:
-                // popup pour gérer l'interaction
-                handleSetWordMenu(menuInfo.position);
-                return true;
+                default:
+                    Log.w("MainActivity", "Menu inconnu : " + item.getTitle());
+            }
 
-            // Supprimer.
-            case R.id.menu_remove:
-                m_Produit.remove(menuInfo.position);
-                // notification de l'adapteur
-                m_Adapter.notifyDataSetChanged();
-                return true;
-
-            default:
-                Log.w("MainActivity", "Menu inconnu : " + item.getTitle());
-        }
 
         return super.onContextItemSelected(item);
     }
 
-    private void handleSetWordMenu(int p_Position) {
+
+    private void handleSetProduitMenu(int p_Position) {
         // Création de la View conteneur du popup
         View setView = getLayoutInflater().inflate(R.layout.set, null);
-        // Récupération de l'EditText qui contiendra la nouvelle valeur : sur setView (et non pas this)
+        // Récupération de l'EditText qui contiendra la nouvelle valeur : sur setView
         EditText txtSetNom = (EditText) setView.findViewById(R.id.txtSetNom);
         EditText txtSetDescription = (EditText) setView.findViewById(R.id.txtSetDescription);
         EditText txtSetPrix = (EditText) setView.findViewById(R.id.txtSetPrix);
-        EditText txtSetCategorie = (EditText) setView.findViewById(R.id.txtSetNom);
-        EditText txtSetQuantite = (EditText) setView.findViewById(R.id.txtSetNom);
+        EditText txtSetCategorie = (EditText) setView.findViewById(R.id.txtSetCategorie);
+        EditText txtSetQuantite = (EditText) setView.findViewById(R.id.txtSetQuantite);
         // on y attache la valeur courante : l'utilisateur peut modifier ou réécrire
         Produit c_row = m_Produit.get(p_Position);
         txtSetNom.setText(c_row.getName());
+        txtSetDescription.setText(c_row.getDescription());
+        txtSetPrix.setText(c_row.getPrix());
+        txtSetCategorie.setText(c_row.getCategorie());
+        txtSetQuantite.setText(c_row.getQuantite());
 
         // Création d'un objet permettant de gérer l'événement sur le bouton "OK" dans l'AlertDialog
         BtnSetHandler setHandler = new BtnSetHandler(p_Position, txtSetNom, txtSetDescription,

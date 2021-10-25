@@ -55,6 +55,7 @@ public class AdapteurPanier extends ArrayAdapter<Produit> {
     }
 
     private static class ViewHolder {
+
         TextView textViewNom;
         TextView textViewDescription;
         TextView textViewPrix;

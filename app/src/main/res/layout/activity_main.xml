@@ -10,23 +10,43 @@
 
 
     <FrameLayout
-        android:id="@+id/frameVendeur"
-        android:layout_width="407dp"
-        android:layout_height="339dp"
+        android:id="@+id/frameClient"
+        android:layout_width="0dp"
+        android:layout_height="190dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
     </FrameLayout>
 
     <FrameLayout
-        android:id="@+id/frameClient"
-        android:layout_width="409dp"
-        android:layout_height="351dp"
+        android:id="@+id/frameVendeur"
+        android:layout_width="0dp"
+        android:layout_height="356dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameClient">
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/txtVPanier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameVendeur">
+        app:layout_constraintTop_toBottomOf="@+id/frameVendeur" />
 
-    </FrameLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAjoutProduit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:srcCompat="@android:drawable/ic_input_add"
+        tools:layout_editor_absoluteX="51dp"
+        tools:layout_editor_absoluteY="626dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
