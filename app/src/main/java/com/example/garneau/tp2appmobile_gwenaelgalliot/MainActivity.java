@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements FragmentLstVendeu
         m_Produit = mDb.ProduitDao().getAllProducts();
         m_Adapter = new AdapteurVendeur(this, m_Produit);
 
+        //ajout du on click au floating button Administrateur pour ajouter un produit
+
         fabAjout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

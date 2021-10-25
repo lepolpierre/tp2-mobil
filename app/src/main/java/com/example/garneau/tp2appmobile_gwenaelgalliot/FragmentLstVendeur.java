@@ -56,18 +56,27 @@ public class FragmentLstVendeur extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_lst_vendeur, container, false);
-        list = view.findViewById(R.id.listeVendeur);
+
         switchAdmin = (Switch) view.findViewById(R.id.switchAdmin);
+
+        list = view.findViewById(R.id.listeVendeur);
+
+        // ajout d'un click sur les item de la liste de produit
+        // pour les envoyer dans le panier
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                //passage du produit dans un bundle pour cree un nouveau fragemeent Client
+                // avec le produit en paramettre dans le bundle
                 Produit unProduit = m_Adapter.getItem(position);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("produit",(Serializable)unProduit);
                 FragmentLstClient frag = new FragmentLstClient();
                 frag.setArguments(bundle);
+
                 mListener.ajoutPanier(unProduit);
 
+                // creation d'un nouveau fragement client pour afficher l'objet ajouter
                 getFragmentManager().beginTransaction().add(R.id.frameClient, frag).commit();
             }
         });
@@ -91,16 +100,17 @@ public class FragmentLstVendeur extends Fragment {
 
 
 //                 AJOUT DES DONNES DANS LA BD
-//                mDb.ProduitDao().deleteAll();
-//                Produit produit = new Produit("pomme","pomme verte", "1.0", "fruit", "1");
-//                mDb.ProduitDao().insert(produit);
-//                produit = new Produit("banane","banane verte", "1.5", "fruit", "1");
-//                mDb.ProduitDao().insert(produit);
-//                produit = new Produit("poire","jolie poire", "1.2", "fruit", "1");
-//                mDb.ProduitDao().insert(produit);
-//                produit = new Produit("pizza","toute garnie", "7.3", "congeler", "1");
-//
-//                mDb.ProduitDao().insert(produit);
+
+                mDb.ProduitDao().deleteAll();
+                Produit produit = new Produit("pomme","pomme verte", "1.0", "fruit", "1");
+                mDb.ProduitDao().insert(produit);
+                produit = new Produit("banane","banane verte", "1.5", "fruit", "1");
+                mDb.ProduitDao().insert(produit);
+                produit = new Produit("poire","jolie poire", "1.2", "fruit", "1");
+                mDb.ProduitDao().insert(produit);
+                produit = new Produit("pizza","toute garnie", "7.3", "congeler", "1");
+
+                mDb.ProduitDao().insert(produit);
 
 
 //                recuperation des donnees dans la bd
@@ -154,13 +164,15 @@ public class FragmentLstVendeur extends Fragment {
     private void handleSetProduitMenu(int p_Position) {
         // Création de la View conteneur du popup
         View setView = getLayoutInflater().inflate(R.layout.set, null);
+
         // Récupération de l'EditText qui contiendra la nouvelle valeur : sur setView
         EditText txtSetNom = (EditText) setView.findViewById(R.id.txtSetNom);
         EditText txtSetDescription = (EditText) setView.findViewById(R.id.txtSetDescription);
         EditText txtSetPrix = (EditText) setView.findViewById(R.id.txtSetPrix);
         EditText txtSetCategorie = (EditText) setView.findViewById(R.id.txtSetCategorie);
         EditText txtSetQuantite = (EditText) setView.findViewById(R.id.txtSetQuantite);
-        // on y attache la valeur courante : l'utilisateur peut modifier ou réécrire
+
+        // on y attache la valeur actuel
         Produit c_row = m_Produit.get(p_Position);
         txtSetNom.setText(c_row.getName());
         txtSetDescription.setText(c_row.getDescription());
@@ -213,8 +225,8 @@ public class FragmentLstVendeur extends Fragment {
 
         /**
          * onClick
-         * modifiera la liste m_items (et pas directement la ListView de ListActivity)
-         * notifiera l'ArrayAdapter qui rechargera la ListView
+         * modifiera la liste m_Produit (
+         * l'Adapter rechargera la ListView
          *
          * @param p_dialog
          * @param p_which
@@ -240,6 +252,7 @@ public class FragmentLstVendeur extends Fragment {
 
     }
 
+    //interface pour comuniquer avec le mainActivity
     public interface ParlerALActivite {
         void ajoutPanier(Produit unProduit);
     }

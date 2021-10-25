@@ -48,7 +48,9 @@ public class FragmentLstClient extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_lst_client, container, false);
+
         list = view.findViewById(R.id.listeClient);
+
         m_Produit = new ArrayList<>();
         m_Produit = MainActivity.panier;
 

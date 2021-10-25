@@ -3,6 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/gwen/AndroidStudioProjects/tp2-mobil-24/10/app/src/main/res/layout-land/activity_main.xml" value="0.165" />
+        <entry key="..\:/Users/gwen/AndroidStudioProjects/tp2-mobil-24/10/app/src/main/res/layout-land/fragment_lst_client.xml" value="0.12257495590828923" />
+        <entry key="..\:/Users/gwen/AndroidStudioProjects/tp2-mobil-24/10/app/src/main/res/layout-land/fragment_lst_vendeur.xml" value="0.12257495590828923" />
+        <entry key="..\:/Users/gwen/AndroidStudioProjects/tp2-mobil-24/10/app/src/main/res/layout-land/row.xml" value="0.12257495590828923" />
+        <entry key="..\:/Users/gwen/AndroidStudioProjects/tp2-mobil-24/10/app/src/main/res/layout-land/row_panier.xml" value="0.12257495590828923" />
+        <entry key="..\:/Users/gwen/AndroidStudioProjects/tp2-mobil-24/10/app/src/main/res/layout-land/set.xml" value="0.12257495590828923" />
+        <entry key="..\:/Users/gwen/AndroidStudioProjects/tp2-mobil-24/10/app/src/main/res/layout-land/switch_item.xml" value="0.12257495590828923" />
         <entry key="..\:/Users/gwen/AndroidStudioProjects/tp2-mobil-24/10/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/gwen/AndroidStudioProjects/tp2-mobil-24/10/app/src/main/res/layout/fragment_lst_client.xml" value="0.335" />
         <entry key="..\:/Users/gwen/AndroidStudioProjects/tp2-mobil-24/10/app/src/main/res/layout/fragment_lst_vendeur.xml" value="0.22962962962962963" />

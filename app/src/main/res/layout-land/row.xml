@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/btnAdd"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+    <TextView
+        android:id="@+id/txtVNom"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="txtVNom" />
+
+    <TextView
+        android:id="@+id/txtVDescription"
+        android:layout_width="63dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="txtVDescription" />
+
+    <TextView
+        android:id="@+id/txtVPrix"
+        android:layout_width="32dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:text="txtVPrix" />
+
+<!--    <TextView-->
+<!--        android:id="@+id/txtVCategorie"-->
+<!--        android:layout_width="36dp"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_weight="1"-->
+<!--        android:text="txtVCategorie" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/txtVQtt"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_weight="1"-->
+<!--        android:text="txtVQtt" />-->
+
+</LinearLayout>

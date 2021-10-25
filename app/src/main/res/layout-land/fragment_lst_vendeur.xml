@@ -4,16 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".FragmentLstClient">
+    tools:context=".FragmentLstVendeur">
 
     <!-- TODO: Update blank fragment layout -->
+
     <TextView
         android:id="@+id/txtViewLstVendeur"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:foregroundGravity="center"
-        android:gravity="center_horizontal"
-        android:text="LstUtilisateur" />
+        android:text="Liste vendeur" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,39 +20,40 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/txtVPNom"
+            android:id="@+id/txtVImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="nom" />
+            android:text="Image" />
 
         <TextView
-            android:id="@+id/txtVPDescription"
+            android:id="@+id/txtVVNom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Prix" />
+            android:text="Nom" />
 
         <TextView
-            android:id="@+id/txtVPPrix"
+            android:id="@+id/txtVVCategorie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Description" />
 
         <TextView
-            android:id="@+id/txtVPQtt"
+            android:id="@+id/txtVVPrix"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Quantite" />
+            android:text="Prix" />
     </LinearLayout>
 
     <ListView
-        android:id="@+id/listeClient"
+        android:id="@+id/listeVendeur"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#009688"
-        tools:listitem="@layout/row_panier" />
+        android:background="#2196F3"
+        tools:listitem="@layout/row" />
+
 
 </LinearLayout>
